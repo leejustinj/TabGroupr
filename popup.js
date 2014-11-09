@@ -68,13 +68,23 @@ function moveTab(tabID, destGroupID){
 //Can be used to switch in between groups using a keyboard shortcut
 function switchGroup(groupID) {
   var destGroup;
-  for (var i = 0; i < groups.length;i++) { 
+  for (var i = 0; i < groups.length; i++) { 
     if  (groups[i] == groupID) {
-	destGroup = groups[i]
+	destGroup = groups[i];
     }
     if (groups[i].active) {
-	groups[i].active = false
+        groups[i].active = false;
+        var tabs = groups[i].tabs;
+        //Removes Tabs
+	for (var j = 0; j < tabs.length; j++){
+	    chrome.tabs.remove(tabs[j].id);
+	}
     }
   }
   destGroup.active = true
- }
+  //Creates tabs and selects the first tab
+  for (var k = 0; k < destGroups.tabs.length; k++) {
+      if (k = 0) chrome.tabs.create({url:destGroups.tabs[k].url,selected:true})
+      else chrome.tabs.create({url:destGroups.tabs[k].url,selected:true})
+  }
+}
