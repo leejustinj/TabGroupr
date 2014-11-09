@@ -4,7 +4,8 @@ var groups = [];
 var defaultGroup = {
   name:"Default Group",
   tabs:[],
-  open:false
+  open:false,
+  active:true
 }
 
 $(document).ready(function(){
@@ -53,10 +54,10 @@ function moveTab(tabID, destGroupID){
       }
     } 
     destGroup.tabs.push(tab);
-    if(sourceGroup.open){
+    if(sourceGroup.active){
       chrome.tabs.remove(tabID);
     }
-    if(destGroup.open){
+    if(destGroup.active){
       chrome.tabs.create({url:tab.url,selected:false});
     }
   }
@@ -72,8 +73,8 @@ function switchGroup(groupID) {
 	destGroup = groups[i]
     }
     if (groups[i].open) {
-	groups[i].open = false
+	groups[i].active = false
     }
   }
-  destGroup.open = true
+  destGroup.active = true
  }
