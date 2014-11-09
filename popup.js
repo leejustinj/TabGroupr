@@ -72,7 +72,7 @@ function switchGroup(groupID) {
     if  (groups[i] == groupID) {
 	destGroup = groups[i]
     }
-    if (groups[i].open) {
+    if (groups[i].active) {
 	groups[i].active = false
     }
   }
