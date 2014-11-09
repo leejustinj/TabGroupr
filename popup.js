@@ -61,3 +61,19 @@ function moveTab(tabID, destGroupID){
     }
   }
 }
+
+//Used for switching in between groups
+//Check me on this
+//Can be used to switch in between groups using a keyboard shortcut
+function switchGroup(groupID) {
+  var destGroup;
+  for (var i = 0; i < groups.length;i++) { 
+    if  (groups[i] == groupID) {
+	destGroup = groups[i]
+    }
+    if (groups[i].open) {
+	groups[i].open = false
+    }
+  }
+  destGroup.open = true
+ }
