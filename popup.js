@@ -85,6 +85,6 @@ function switchGroup(groupID) {
   //Creates tabs and selects the first tab
   for (var k = 0; k < destGroups.tabs.length; k++) {
       if (k = 0) chrome.tabs.create({url:destGroups.tabs[k].url,selected:true})
-      else chrome.tabs.create({url:destGroups.tabs[k].url,selected:true})
+      else chrome.tabs.create({url:destGroups.tabs[k].url,selected:false})
   }
 }
