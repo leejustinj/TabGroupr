@@ -1,4 +1,3 @@
-
 var groups = [];
 
 var defaultGroup = {
@@ -8,18 +7,10 @@ var defaultGroup = {
   active:true
 }
 
-<<<<<<< HEAD
 var refreshUI = function(){
-  $(".group").remove();
   for(var i = 0;i<groups.length;i++){
-=======
-$(document).ready(function(){
-  chrome.tabs.query({currentWindow:true},function(tabarray){
-    defaultGroup.tabs = tabarray;
-    groups.push(defaultGroup);
-      for(var i = 0;i<groups.length;i++){
->>>>>>> c63a9cf9607b444545c765c98c35aa241c0301ef
       $(".container").append("<div class='group group"+i+"'><a href='#'><h3>"+groups[i].name+"</h3></a></div>");
+      
       $(".group"+i).click({groupnum:i},function(event){
 	var i = event.data.groupnum;
 	if(groups[i].open===false){
@@ -33,8 +24,8 @@ $(document).ready(function(){
 	  $(".tab"+i).remove();
 	}
       });
+      
     }
-<<<<<<< HEAD
 };
 
 $(document).ready(function(){
@@ -42,10 +33,6 @@ $(document).ready(function(){
     defaultGroup.tabs = tabarray;
     groups.push(defaultGroup);
     refreshUI();
-  });
-  
-});
-=======
   });  
 });
 
@@ -104,4 +91,3 @@ function switchGroup(groupID) {
       else chrome.tabs.create({url:destGroups.tabs[k].url,selected:false})
   }
 }
->>>>>>> c63a9cf9607b444545c765c98c35aa241c0301ef
