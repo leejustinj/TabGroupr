@@ -7,13 +7,10 @@ var defaultGroup = {
   open:false
 }
 
-$(document).ready(function(){
-  chrome.tabs.query({currentWindow:true},function(tabarray){
-    defaultGroup.tabs = tabarray;
-    groups.push(defaultGroup);
-    for(var i = 0;i<groups.length;i++){
+var refreshUI = function(){
+  $(".group").remove();
+  for(var i = 0;i<groups.length;i++){
       $(".container").append("<div class='group group"+i+"'><a href='#'><h3>"+groups[i].name+"</h3></a></div>");
-      
       $(".group"+i).click({groupnum:i},function(event){
 	var i = event.data.groupnum;
 	if(groups[i].open===false){
@@ -27,8 +24,14 @@ $(document).ready(function(){
 	  $(".tab"+i).remove();
 	}
       });
-      
     }
+};
+
+$(document).ready(function(){
+  chrome.tabs.query({currentWindow:true},function(tabarray){
+    defaultGroup.tabs = tabarray;
+    groups.push(defaultGroup);
+    refreshUI();
   });
   
 });
