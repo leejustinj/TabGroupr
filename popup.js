@@ -44,8 +44,10 @@ function storeGroups(){
 function getGroups(){
   chrome.storage.local.get('groups',function(items){
     if(items.groups){
+      console.log('Data retrieved successfully');
       groups = items.groups;
     } else {
+      console.log('Data retrieval failure');
       groups = [];
     }
   });
@@ -118,6 +120,8 @@ function createGroup(groupName){
   active:true
   }
   groups.push(newGroup);
+  storeGroups();
+  refreshUI();
 }
 
 //Used for deleting a group
