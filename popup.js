@@ -91,3 +91,33 @@ function switchGroup(groupID) {
       else chrome.tabs.create({url:destGroups.tabs[k].url,selected:false})
   }
 }
+
+//Um. I probably have to fix everything here.
+//Used for creating a group
+function createGroup(groupName){
+  var newGroup = {
+  name: groupName,
+  tabs:[],
+  open:false,
+  active:true
+  }
+  groups.push(newGroup);
+}
+
+//Used for deleting a group
+function deleteGroup(groupID){
+  for (var i = array.length - 1; i>=0; i--){	
+    if (groups[i] === groupID){
+    	array.splice(i,1);
+    }
+  }
+}
+
+//Used for naming a group
+function nameGroup(groupID){
+  for (var i = array.length - 1; i--){
+    if (groups[i] === groupID){
+      groups[id].name=label;
+    }
+  }
+}
