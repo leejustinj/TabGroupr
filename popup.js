@@ -30,11 +30,26 @@ var refreshUI = function(){
 
 $(document).ready(function(){
   chrome.tabs.query({currentWindow:true},function(tabarray){
+    getGroups();
     defaultGroup.tabs = tabarray;
     groups.push(defaultGroup);
     refreshUI();
   });  
 });
+
+function storeGroups(){
+  chrome.storage.local.set({'groups': groups});
+}
+
+function getGroups(){
+  chrome.storage.local.get('groups',function(items){
+    if(items.groups){
+      groups = items.groups;
+    } else {
+      groups = [];
+    }
+  });
+}
 
 // IMPORTANT:  this could be totally wrong.
 // I have no idea how to test.  Plz help.
@@ -55,7 +70,8 @@ function moveTab(tabID, destGroupID){
         sourceGroup.tabs.splice(j,1);
         break;
       }
-    } 
+    }
+    storeGroups();
     destGroup.tabs.push(tab);
     if(sourceGroup.active){
       chrome.tabs.remove(tabID);
@@ -115,7 +131,7 @@ function deleteGroup(groupID){
 
 //Used for naming a group
 function nameGroup(groupID){
-  for (var i = array.length - 1; i--){
+  for (var i = array.length - 1; i>=0; i--){
     if (groups[i] === groupID){
       groups[id].name=label;
     }
