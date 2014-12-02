@@ -41,8 +41,13 @@ $(document).ready(function(){
   chrome.tabs.query({currentWindow:true},function(tabarray){
     chrome.storage.local.get('groups',function(items){
       defaultGroup.tabs = tabarray;
-      console.log(items.groups);
-      groups = items.groups;
+      if(items.groups){
+        groups = items.groups;
+        console.log('Restoring Saved Groups');
+      } else {
+        groups = [];
+        console.log('No Saved Groups Found');
+      }
       var flag = false;
       for(var i = 0; i<groups.length;i++){
         if(groups[i].name==='Default Group'){
@@ -60,19 +65,6 @@ $(document).ready(function(){
 
 function storeGroups(){
   chrome.storage.local.set({'groups': groups},refreshUI);
-}
-
-function getGroups(){
-  chrome.storage.local.get('groups',function(items){
-    if(items.groups){
-      console.log('Data retrieved successfully');
-      groups = items.groups;
-    } else {
-      console.log('Data retrieval failure');
-      groups = [];
-    }
-    refreshUI();
-  });
 }
 
 // IMPORTANT:  this could be totally wrong.
