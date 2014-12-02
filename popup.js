@@ -11,27 +11,28 @@ var defaultGroup = {
 var refreshUI = function(){
   $(".group").remove();
   for(var i = 0;i<groups.length;i++){
-      $(".container").append("<div class='group group"+i+"'><a href='#'><h3>"+groups[i].name+"</h3></a></div>");
-      
-      $(".group"+i).click({groupnum:i},function(event){
-	var i = event.data.groupnum;
-	if(groups[i].open===false){
- 	  groups[i].open=true;
-      $(".group"+i).append("<input class='tab"+i+"' id='remove"+i+"' type='button' value='Remove Group' />");
+      $(".container").append("<div class='group group"+i+"'><a href='#'><h3 id='name"+i+"'>"+groups[i].name+"</h3></a></div>");
+      $("#name"+i).click({groupnum:i},function(event){
+	    var i = event.data.groupnum;$(".tab"+i).toggle();});
+      $(".group"+i).append("<input class='tab"+i+"' id='remove"+i+"' type='button' value='Remove Group' /><input class='tab"+i+"' id='switch"+i+"' type='button' value='Switch to this Group' />");
       $("#remove"+i).click({groupnum:i},function(event){
             deleteGroup(event.data.groupnum);
         });
+      $("#switch"+i).click({groupnum:i},function(event){
+            switchGroup(event.data.groupnum);
+        });
 	  for(var j = 0;j<groups[i].tabs.length;j++){
-	    $(".group"+i).append("<div class='tab"+i+"'><h5>"+groups[i].tabs[j].title+"</h5></div>");
-	  }
+	    $(".group"+i).append("<div class='tab"+i+"'><h5>"+groups[i].tabs[j].title+" <a href='#'><span id='move"+i+"_"+j+"'>Move</span></a></h5><div id='tab"+i+"_"+j+"'></div></div>");
+        for(var p = 0;p<groups.length;p++)
+        {
+            $("#tab"+i+"_"+j).append("<div id='send"+i+"_"+j+"_"+p+"'><a href='#'>Send To "+groups[p].name+"</a></div>");
+            $("#send"+i+"_"+j+"_"+p).click({currgroup:i,tabnum:j,newgroup:p},function(event){moveTab(event.data.currgroup,event.data.tabnum,event.data.newgroup);});
+        }
+        $("#tab"+i+"_"+j).toggle(false); 
+        $("#move"+i+"_"+j).click({groupnum:i,tabnum:j},function(event){$("#tab"+event.data.groupnum+"_"+event.data.tabnum).toggle();});
+      }
+      $(".tab"+i).toggle(false);
 	}
-	else{
-	  groups[i].open=false;
-	  $(".tab"+i).remove();
-	}
-      });
-      
-    }
 };
 
 $(document).ready(function(){
