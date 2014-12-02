@@ -73,29 +73,20 @@ function storeGroups(){
 // Intended to move tab from one group to another
 // If the source or dest group is open, modifies tab state
 // Does nothing with the UI at this time 
-function moveTab(tabID, destGroupID){
+function moveTab(sourceGroupID, tabID, destGroupID){
   var destGroup, sourceGroup, tab;
-  for(var i = 0; i<groups.length;i++){
-    if(groups[i].id===destGroupID){
-      destGroup = groups[i];
-    }
-    for(var j = 0; j<groups[i].tabs.length;j++){
-      if(groups[i].tabs[j].id===tabID){
-        tab = groups[i].tabs[j];
-        sourceGroup = groups[i];
-        sourceGroup.tabs.splice(j,1);
-        break;
-      }
-    }
-    storeGroups();
-    destGroup.tabs.push(tab);
-    if(sourceGroup.active){
-      chrome.tabs.remove(tabID);
-    }
-    if(destGroup.active){
-      chrome.tabs.create({url:tab.url,selected:false});
-    }
-  }
+  sourceGroup = groups[sourceGroupID];
+  destGroup = groups[destGroupID];
+  tab = sourceGroup[tabID];
+  /*if(sourceGroup.active){
+    chrome.tabs.remove(sourceGroup[tabID].id);
+  }*/
+  sourceGroup.tabs.splice(tabID,1);
+  destGroup.tabs.push(tab);
+  storeGroups();
+  /*if(destGroup.active){
+    chrome.tabs.create({url:tab.url,selected:false});
+  }*/
 }
 
 //Used for switching in between groups
