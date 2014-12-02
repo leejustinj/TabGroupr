@@ -46,7 +46,7 @@ $(document).ready(function(){
         groups = items.groups;
         console.log('Restoring Saved Groups');
       } else {
-        groups = [];
+        groups = [defaultGroup];
         console.log('No Saved Groups Found');
       }
       if(items.activeGroup){
@@ -56,16 +56,7 @@ $(document).ready(function(){
         console.log('No Saved Active Group Found, defaulting to 0');
         activeGroup = 0;
       }
-      var flag = false;
-      for(var i = 0; i<groups.length;i++){
-        if(groups[i].name==='Default Group'){
-          groups[i] = defaultGroup;
-          flag = true;
-        }
-      }
-      if(!flag){
-        groups.push(defaultGroup);
-      }
+      groups[activeGroup].tabs = tabarray;
       refreshUI();
     });
   });  
