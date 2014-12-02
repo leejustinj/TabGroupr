@@ -95,7 +95,7 @@ function moveTab(sourceGroupID, tabID, destGroupID){
 function switchGroup(groupID) {
   var destGroup;
   for (var i = 0; i < groups.length; i++) { 
-    if  (groups[i] == groupID) {
+    if  (groups[i].id == groupID) {
 	destGroup = groups[i];
     }
     if (groups[i].active) {
