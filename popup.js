@@ -31,10 +31,22 @@ var refreshUI = function(){
 
 $(document).ready(function(){
   chrome.tabs.query({currentWindow:true},function(tabarray){
-    getGroups();
-    defaultGroup.tabs = tabarray;
-    groups.push(defaultGroup);
-    refreshUI();
+    chrome.storage.local.get('groups',function(items){
+      defaultGroup.tabs = tabarray;
+      console.log(items.groups);
+      groups = items.groups;
+      var flag = false;
+      for(var i = 0; i<groups.length;i++){
+        if(groups[i].name==='Default Group'){
+          groups[i] = defaultGroup;
+          flag = true;
+        }
+      }
+      if(!flag){
+        groups.push(defaultGroup);
+      }
+      refreshUI();
+    });
   });  
 });
 
@@ -123,7 +135,6 @@ function createGroup(groupName){
   }
   groups.push(newGroup);
   storeGroups();
-  refreshUI();
 }
 
 //Used for deleting a group
