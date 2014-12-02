@@ -16,6 +16,10 @@ var refreshUI = function(){
 	var i = event.data.groupnum;
 	if(groups[i].open===false){
  	  groups[i].open=true;
+      $(".group"+i).append("<input class='tab"+i+"' id='remove"+i+"' type='button' value='Remove Group' />");
+      $("#remove"+i).click({groupnum:i},function(event){
+            deleteGroup(event.data.groupnum);
+        });
 	  for(var j = 0;j<groups[i].tabs.length;j++){
 	    $(".group"+i).append("<div class='tab"+i+"'><h5>"+groups[i].tabs[j].title+"</h5></div>");
 	  }
