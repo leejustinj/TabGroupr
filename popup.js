@@ -1,4 +1,5 @@
 var groups = [];
+var activeGroup;
 
 var defaultGroup = {
   name:"Default Group",
@@ -39,7 +40,7 @@ $(document).ready(function(){
   });
 
   chrome.tabs.query({currentWindow:true},function(tabarray){
-    chrome.storage.local.get('groups',function(items){
+    chrome.storage.local.get(['groups','activeGroup'],function(items){
       defaultGroup.tabs = tabarray;
       if(items.groups){
         groups = items.groups;
@@ -47,6 +48,13 @@ $(document).ready(function(){
       } else {
         groups = [];
         console.log('No Saved Groups Found');
+      }
+      if(items.activeGroup){
+        console.log('Restoring Saved Active Group');
+        activeGroup = items.activeGroup;
+      } else {
+        console.log('No Saved Active Group Found, defaulting to 0');
+        activeGroup = 0;
       }
       var flag = false;
       for(var i = 0; i<groups.length;i++){
@@ -64,7 +72,7 @@ $(document).ready(function(){
 });
 
 function storeGroups(){
-  chrome.storage.local.set({'groups': groups},refreshUI);
+  chrome.storage.local.set({'groups': groups,'activeGroup':activeGroup},refreshUI);
 }
 
 // IMPORTANT:  this could be totally wrong.
@@ -81,8 +89,8 @@ function moveTab(sourceGroupID, tabID, destGroupID){
   /*if(sourceGroup.active){
     chrome.tabs.remove(sourceGroup[tabID].id);
   }*/
-  sourceGroup.tabs.splice(tabID,1);
   destGroup.tabs.push(tab);
+  //sourceGroup.tabs.splice(tabID,1);
   storeGroups();
   /*if(destGroup.active){
     chrome.tabs.create({url:tab.url,selected:false});
@@ -107,6 +115,8 @@ function switchGroup(groupID) {
 	}
     }
   }
+  activeGroup = groupID;
+  storeGroups();
   destGroup.active = true
   //Creates tabs and selects the first tab
   for (var k = 0; k < destGroups.tabs.length; k++) {
@@ -130,6 +140,7 @@ function createGroup(groupName){
 
 //Used for deleting a group
 function deleteGroup(groupID){
+    //TODO: UPDATE ACTIVE GROUP ID IF NEEDED
   	groups.splice(groupID,1); 
     storeGroups();
 }
