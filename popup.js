@@ -76,16 +76,17 @@ function moveTab(sourceGroupID, tabID, destGroupID){
   var destGroup, sourceGroup, tab;
   sourceGroup = groups[sourceGroupID];
   destGroup = groups[destGroupID];
-  tab = sourceGroup[tabID];
-  /*if(sourceGroup.active){
-    chrome.tabs.remove(sourceGroup[tabID].id);
-  }*/
+  tab = sourceGroup.tabs[tabID];
+  if(sourceGroupID===activeGroup){
+    chrome.tabs.remove(tab.id);
+  }
+  console.log(tab);
   destGroup.tabs.push(tab);
-  //sourceGroup.tabs.splice(tabID,1);
+  sourceGroup.tabs.splice(tabID,1);
   storeGroups();
-  /*if(destGroup.active){
+  if(destGroupID===activeGroup){
     chrome.tabs.create({url:tab.url,selected:false});
-  }*/
+  }
 }
 
 //Used for switching in between groups
