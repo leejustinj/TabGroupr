@@ -8,6 +8,7 @@ var defaultGroup = {
 }
 
 var refreshUI = function(){
+  $(".group").remove();
   for(var i = 0;i<groups.length;i++){
       $(".container").append("<div class='group group"+i+"'><a href='#'><h3>"+groups[i].name+"</h3></a></div>");
       
@@ -38,7 +39,7 @@ $(document).ready(function(){
 });
 
 function storeGroups(){
-  chrome.storage.local.set({'groups': groups});
+  chrome.storage.local.set({'groups': groups},refreshUI);
 }
 
 function getGroups(){
@@ -50,6 +51,7 @@ function getGroups(){
       console.log('Data retrieval failure');
       groups = [];
     }
+    refreshUI();
   });
 }
 
