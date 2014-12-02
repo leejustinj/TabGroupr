@@ -30,6 +30,10 @@ var refreshUI = function(){
 };
 
 $(document).ready(function(){
+  $(".create").click(function(event){
+     createGroup($("#name").val());
+  });
+
   chrome.tabs.query({currentWindow:true},function(tabarray){
     getGroups();
     defaultGroup.tabs = tabarray;
