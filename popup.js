@@ -30,6 +30,10 @@ var refreshUI = function(){
 };
 
 $(document).ready(function(){
+  $(".create").click(function(event){
+     createGroup($("#name").val());
+  });
+
   chrome.tabs.query({currentWindow:true},function(tabarray){
     chrome.storage.local.get('groups',function(items){
       defaultGroup.tabs = tabarray;
@@ -139,18 +143,12 @@ function createGroup(groupName){
 
 //Used for deleting a group
 function deleteGroup(groupID){
-  for (var i = array.length - 1; i>=0; i--){	
-    if (groups[i] === groupID){
-    	array.splice(i,1);
-    }
-  }
+  	groups.splice(groupID,1); 
+    storeGroups();
 }
 
 //Used for naming a group
-function nameGroup(groupID){
-  for (var i = array.length - 1; i>=0; i--){
-    if (groups[i] === groupID){
-      groups[id].name=label;
-    }
-  }
+function nameGroup(groupID,label){
+      groups[groupID].name=label;
+      storeGroups();
 }
