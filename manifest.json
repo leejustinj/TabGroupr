@@ -13,6 +13,9 @@
     "default_title": "TabGroupr",
     "default_popup": "popup.html"
   },
+  
+  "icons": { "48": "icon-48.png",
+             "128": "icon-128.png" },
 
   "manifest_version": 2
 }
