@@ -97,11 +97,13 @@ function switchGroup(groupID) {
   var destGroups = groups[groupID];
   var tabs = groups[activeGroup].tabs;
   //Creates tabs and selects the first tab
-  for (var k = 0; k < destGroups.tabs.length; k++) {
-      if (k = 0) chrome.tabs.create({url:destGroups.tabs[k].url,selected:true});
+  var p = destGroups.tabs.length
+  for (var k = 0; k < p; k++) {
+      if (k === 0) chrome.tabs.create({url:destGroups.tabs[k].url,selected:true});
       else chrome.tabs.create({url:destGroups.tabs[k].url,selected:false});
   }
-  for (var j = 0; j < tabs.length; j++){
+  var q = tabs.length
+  for (var j = 0; j < q; j++){
 	    chrome.tabs.remove(tabs[j].id);
   }
   activeGroup = groupID;
