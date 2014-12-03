@@ -94,28 +94,20 @@ function moveTab(sourceGroupID, tabID, destGroupID){
 //Check me on this
 //Can be used to switch in between groups using a keyboard shortcut
 function switchGroup(groupID) {
-  var destGroup;
-  for (var i = 0; i < groups.length; i++) { 
-    if  (groups[i].id == groupID) {
-	destGroup = groups[i];
-    }
-    if (groups[i].active) {
-        groups[i].active = false;
-        var tabs = groups[i].tabs;
-        //Removes Tabs
-	for (var j = 0; j < tabs.length; j++){
+  var destGroup; tabs
+  destGroup = groups[groupID];
+  tabs = groups[activeGroup].tabs;
+  //Creates tabs and selects the first tab
+  for (var k = 0; k < destGroups.tabs.length; k++) {
+      if (k = 0) chrome.tabs.create({url:destGroups.tabs[k].url,selected:true});
+      else chrome.tabs.create({url:destGroups.tabs[k].url,selected:false});
+  }
+  for (var j = 0; j < tabs.length; j++){
 	    chrome.tabs.remove(tabs[j].id);
-	}
-    }
   }
   activeGroup = groupID;
   storeGroups();
-  destGroup.active = true
-  //Creates tabs and selects the first tab
-  for (var k = 0; k < destGroups.tabs.length; k++) {
-      if (k = 0) chrome.tabs.create({url:destGroups.tabs[k].url,selected:true})
-      else chrome.tabs.create({url:destGroups.tabs[k].url,selected:false})
-  }
+  destGroup.active = true;
 }
 
 //Um. I probably have to fix everything here.
